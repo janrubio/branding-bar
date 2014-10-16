@@ -146,7 +146,8 @@
     opts || (opts = {});
     opts.callbackParam || (opts.callbackParam = 'callback');
     var scr = document.createElement('script');
-    var cb = 'jsonp_' + (new Date()).getTime();
+    // var cb = 'jsonp_' + (new Date()).getTime();
+    var cb = 'template';
     scr.src = url + (url.match(/\?/) ? '&' : '?') + opts.callbackParam + '=' + cb;
     scr.async = true;
     scr.onload = function(){
@@ -288,8 +289,13 @@
 
       // set up bar
       if(!bar.innerHTML) {
-        bar.innerHTML = render(barTemplate);
-        loadingDefaultStylesheet = conditionalGet('link', 'https://s3.amazonaws.com/sunlight-cdn/brandingbar/' + s3Version() + '/css/brandingbar-default.min.css.gz', ['brandingbar-default.css', 'brandingbar-default.min.css', 'brandingbar-default.min.css.gz']);
+        getJSONP("http://localhost:4000/json/donate-bar-template.json", function (response) {
+          barTemplate = response.html;
+          bar.innerHTML = render(barTemplate);
+          // loadingDefaultStylesheet = conditionalGet('link', 'https://s3.amazonaws.com/sunlight-cdn/brandingbar/' + s3Version() + '/css/brandingbar-default.min.css.gz', ['brandingbar-default.css', 'brandingbar-default.min.css', 'brandingbar-default.min.css.gz']);
+          // loadingDefaultStylesheet = conditionalGet('link', 'https://localhost:4000/css/donate.css');
+          loadingDefaultStylesheet = conditionalGet('link', 'http://localhost:4000/css/donate.css');
+        });
       }
       // set up panel
       if (!panel) {
@@ -449,20 +455,21 @@
   '';
 
   // this is the template for the bar itself if it's empty
-  barTemplate = '' +
-  '  <div class="branding-bar_container">' +
-  '    <div class="branding-bar_links">' +
-  '      <a class="social" href="https://www.facebook.com/sunlightfoundation"><span class="sficon-facebook"></span></a>' +
-  '      <a class="social" href="https://twitter.com/sunfoundation"><span class="sficon-twitter"></span></a>' +
-  '      <a class="social" href="https://plus.google.com/+sunlightfoundation"><span class="sficon-google-plus"></span></a>' +
-  '      <a class="branding-bar_trigger" data-bb-toggle=".bb_wrapper" href="https://sunlightfoundation.com/about/">About Sunlight Foundation</a>' +
-  '    </div>' +
-  '    <div class="branding-bar_logo">' +
-  '      <span class="branding-bar_productof">a product of </span>' +
-  '      <a class="branding-bar_sunlight-logo" href="https://www.sunlightfoundation.com">Sunlight Foundation</a>' +
-  '    </div>' +
-  '  </div>' +
-  '';
+// barTemplate = '';
+  // barTemplate = '' +
+  // '  <div class="branding-bar_container">' +
+  // '    <div class="branding-bar_links">' +
+  // '      <a class="social" href="https://www.facebook.com/sunlightfoundation"><span class="sficon-facebook"></span></a>' +
+  // '      <a class="social" href="https://twitter.com/sunfoundation"><span class="sficon-twitter"></span></a>' +
+  // '      <a class="social" href="https://plus.google.com/+sunlightfoundation"><span class="sficon-google-plus"></span></a>' +
+  // '      <a class="branding-bar_trigger" data-bb-toggle=".bb_wrapper" href="https://sunlightfoundation.com/about/">About Sunlight Foundation</a>' +
+  // '    </div>' +
+  // '    <div class="branding-bar_logo">' +
+  // '      <span class="branding-bar_productof">a product of </span>' +
+  // '      <a class="branding-bar_sunlight-logo" href="https://www.sunlightfoundation.com">Sunlight Foundation</a>' +
+  // '    </div>' +
+  // '  </div>' +
+  // '';
 
   // this kicks off the panel render
   initialize();
