@@ -36,8 +36,35 @@ function removeClass(el, className) {
   }
 }
 
+function toggle(els, opts) {
+  if (typeof opts.toggle === 'string'){ opts.toggle = [opts.toggle]; }
+  if (typeof opts.add === 'string'){ opts.add = [opts.add]; }
+  if (typeof opts.remove === 'string'){ opts.remove = [opts.remove]; }
+  if (typeof els.length === 'undefined') { els = [els]; }
+  var i, j;
+  for(i=0; i<els.length; i++){
+    if (opts.toggle) {
+      for (j=0; j<opts.toggle.length; j++){
+        toggleClass(els[i], opts.toggle[j]);
+      }
+    }
+    opts.add && addClass(els[i], opts.add.join(' '));
+    if (opts.remove) {
+      for (j=0; j<opts.remove.length; j++){
+        removeClass(els[i], opts.remove[j]);
+      }
+    }
+  }
+}
+
+function appendScript(url) {
+  // TODO
+}
+
 module.exports = {
   toggleClass: toggleClass,
   addClass: addClass,
-  removeClass: removeClass
+  removeClass: removeClass,
+  appendScript: appendScript,
+  toggle: toggle
 };
