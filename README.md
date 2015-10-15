@@ -8,6 +8,20 @@ The branding bar for Sunlight's tools and projects sits at the top of each site,
 
 **Using Bower**
 
+```yaml
+:my_client_name:
+  :service_name: name-of-your-service
+  :oauth:
+    :enabled:       true                   # or false
+```
+
+```ruby
+:my_client_name:
+  :service_name: name-of-your-service
+  :oauth:
+    :enabled:       true                   # or false
+```
+
 You can include `'branding-bar': 'sunlightlabs/branding-bar'` in your project's `bower.json` dependencies,
 or just `bower install sunlightlabs/branding-bar`
 
